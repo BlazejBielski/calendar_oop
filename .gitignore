@@ -2,6 +2,6 @@
 .vscode
 
 venv
-*/*.pyc
+**/*.pyc
 *_data.json
 *.json

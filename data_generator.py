@@ -28,10 +28,10 @@ class DataGenerator:
             }
 
             if self.reminder:
-                events['reminder'] = random.choice([True, False])
+                event['reminder'] = random.choice([True, False])
 
             if self.workshop:
-                events['workshop'] = random.choices(self.users, k=random.randint(3, 20))
+                event['workshop'] = random.choices(self.users, k=random.randint(3, 20))
 
             events.append(event)
 
@@ -45,44 +45,4 @@ class DataGenerator:
     @staticmethod
     def load_data(path):
         with open(path, 'r') as file:
-            return json.load(path)
-
-
-event_data = DataGenerator(
-    datetime.date.today() + datetime.timedelta(days=10),
-    (15, 180),
-    ['lunch', 'ceo meeting', 'lecture', 'seminar', 'sport event'],
-    ['nice meeting', 'troublesome meeting', 'god, I hate that', 'kill me', 'emergency meeting'],
-    ['Pawel', 'Marek', 'Darek', 'Jarek', 'Andrzej', 'Ryszard'],
-    False,
-    False,
-)
-
-event_datas = event_data.generate_data(150)
-event_data.save_data(event_datas, 'event_data.json')
-
-# event_data = DataGenerator(
-#     datetime.date.today() + datetime.timedelta(days=10),
-#     (15, 180),
-#     ['lunch', 'ceo meeting', 'lecture', 'seminar', 'sport event'],
-#     ['nice meeting', 'troublesome meeting', 'god, I hate that', 'kill me', 'emergency meeting'],
-#     ['Pawel', 'Marek', 'Darek', 'Jarek', 'Andrzej', 'Ryszard'],
-#     True,
-#     False,
-# )
-#
-# reminders = event_data.generate_data(50)
-# event_data.save_data(reminders, 'remind_data.json')
-
-# workshop_data = DataGenerator(
-#     datetime.date.today() + datetime.timedelta(days=10),
-#     (15, 180),
-#     ['lunch', 'ceo meeting', 'lecture', 'seminar', 'sport event'],
-#     ['nice meeting', 'troublesome meeting', 'god, I hate that', 'kill me', 'emergency meeting'],
-#     ['Pawel', 'Marek', 'Darek', 'Jarek', 'Andrzej', 'Ryszard'],
-#     False,
-#     True,
-# )
-#
-# workshops = workshop_data.generate_data(50)
-# workshop_data.save_data(workshops, 'workshop_data.json')
+            return json.load(file)
