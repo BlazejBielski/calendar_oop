@@ -38,7 +38,7 @@ class Event:
         self._start_date = new_start_date
 
     def __repr__(self):
-        attrs = ', '.join(f'{key[1::] if key.startswith("_") else key}={repr(value)}' \
+        attrs = ', '.join(f'{key[1::] if key.startswith("_") else key}={repr(value)}'\
                           for key, value in vars(self).items())
         return f'{type(self).__name__}({attrs})'
 
