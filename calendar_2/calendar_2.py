@@ -136,8 +136,6 @@ class Calendar:
         for event in events:
             self._events.remove(event)
 
-
-
     def __len__(self):
         return len(self._events)
 
