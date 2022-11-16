@@ -75,7 +75,7 @@ class Calendar:
     def _filter_by_description(self, **kwargs):
         events = []
 
-        for event in events:
+        for event in self._events:
             attr = getattr(event, 'description', None)
 
             if attr and kwargs.get('search_text', '') in attr:
@@ -86,7 +86,7 @@ class Calendar:
     def _filter_by_owner(self, **kwargs):
         events = []
 
-        for event in events:
+        for event in self._events:
             attr = getattr(event, 'owner', None)
 
             if attr and kwargs.get('search_name', '') in attr:
@@ -99,6 +99,7 @@ class Calendar:
 
         for event in self._events:
             attr = getattr(event, 'participants', None)
+
             if attr and kwargs.get('search_name', '') in attr:
                 events.append(event)
 
@@ -123,7 +124,7 @@ data = generate_objects()
 calendar = Calendar(data)
 filter_a = calendar.filter_by_date()
 filter_duration = calendar.filter_by_duration(duration=20)
-f = calendar.filter('description', search_text='meeting')
+f = calendar.filter('owner', search_name='e')
 # print(len(filter_a))
 pprint(f)
 # pprint(calendar.events)
