@@ -52,6 +52,69 @@ class Calendar:
 
         return events
 
+    def _filter_by_duration(self, **kwargs):
+        events = []
+
+        for event in self._events:
+            attr = getattr(event, 'duration', None)
+            if attr and attr in range(kwargs.get('min', 0), kwargs.get('max', attr + 1)):
+                events.append(event)
+
+        return events
+
+    def _filer_by_title(self, **kwargs):
+        events = []
+
+        for event in self._events:
+            attr = getattr(event, 'title', None)
+            if attr and kwargs.get('search_text', '') in attr:
+                events.append(event)
+
+        return events
+
+    def _filter_by_description(self, **kwargs):
+        events = []
+
+        for event in events:
+            attr = getattr(event, 'description', None)
+
+            if attr and kwargs.get('search_text', '') in attr:
+                events.append(event)
+
+        return events
+
+    def _filter_by_owner(self, **kwargs):
+        events = []
+
+        for event in events:
+            attr = getattr(event, 'owner', None)
+
+            if attr and kwargs.get('search_name', '') in attr:
+                events.append(event)
+
+        return events
+
+    def _filer_by_participants(self, **kwargs):
+        events = []
+
+        for event in self._events:
+            attr = getattr(event, 'participants', None)
+            if attr and kwargs.get('search_name', '') in attr:
+                events.append(event)
+
+        return events
+    def filter(self, filter_name, **kwargs):
+
+        options = {
+            'duration': self._filter_by_duration,
+            'title': self._filer_by_title,
+            'description': self._filter_by_description,
+            'owner': self._filter_by_owner,
+            'participants': self._filer_by_participants,
+        }
+
+        return options.get(filter_name)(**kwargs)
+
     def __len__(self):
         return len(self._events)
 
@@ -59,10 +122,8 @@ class Calendar:
 data = generate_objects()
 calendar = Calendar(data)
 filter_a = calendar.filter_by_date()
-filter_r = calendar.filter_by_date(datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(weeks=4))
 filter_duration = calendar.filter_by_duration(duration=20)
-# print(len(filter_r))
+f = calendar.filter('description', search_text='meeting')
 # print(len(filter_a))
-pprint(filter_duration)
+pprint(f)
 # pprint(calendar.events)
-
