@@ -27,6 +27,15 @@ class Calendar:
 
         self._events.append(value)
 
+    @staticmethod
+    def sort_by_date(fn):
+        def inner(*args, **kwargs):
+            events = fn(*args, **kwargs)
+
+            return sorted(events, key=lambda x: x.start_date)
+
+        return inner
+
     def filter_by_date(self, start_date=datetime.datetime.min, end_date=datetime.datetime.max):
 
         events = []
@@ -104,6 +113,8 @@ class Calendar:
                 events.append(event)
 
         return events
+
+    @sort_by_date
     def filter(self, filter_name, **kwargs):
 
         options = {
@@ -116,6 +127,17 @@ class Calendar:
 
         return options.get(filter_name)(**kwargs)
 
+    def remove(self, idx):
+        events = list(filter(lambda x: x.idx == idx, self._events))
+
+        if not events:
+            raise ValueError(f"You can't delete element because it does not exist")
+
+        for event in events:
+            self._events.remove(event)
+
+
+
     def __len__(self):
         return len(self._events)
 
@@ -124,7 +146,8 @@ data = generate_objects()
 calendar = Calendar(data)
 filter_a = calendar.filter_by_date()
 filter_duration = calendar.filter_by_duration(duration=20)
-f = calendar.filter('owner', search_name='e')
+f = calendar.filter('owner', search_name='Pawel')
+r = calendar.remove(2)
 # print(len(filter_a))
-pprint(f)
-# pprint(calendar.events)
+# pprint(f)
+pprint(len(calendar))
