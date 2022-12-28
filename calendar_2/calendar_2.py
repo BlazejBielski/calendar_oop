@@ -138,14 +138,3 @@ class Calendar:
 
     def __len__(self):
         return len(self._events)
-
-
-data = generate_objects()
-calendar = Calendar(data)
-filter_a = calendar.filter_by_date()
-filter_duration = calendar.filter_by_duration(duration=20)
-f = calendar.filter('owner', search_name='Pawel')
-r = calendar.remove(2)
-# print(len(filter_a))
-# pprint(f)
-pprint(len(calendar))
